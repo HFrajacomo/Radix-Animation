@@ -1,4 +1,6 @@
 import pygame as pg
+import pyaudio
+import numpy as np
 import random as rd
 import time
 from pygame.locals import *
@@ -6,6 +8,12 @@ import sys
 import os
 
 pg.init()
+P = pyaudio.PyAudio()
+
+volume = 0.5
+sample_rate = 44100
+duration = 0.05
+freq = 100
 
 WIDTH = 640
 HEIGHT = 480
@@ -61,6 +69,12 @@ def DrawWhiteBars(Lista):
 	
 def DrawRedBar(Index, ValIndex):
 	BlitTitle()
+	samples = (np.sin(2*np.pi*np.arange(sr*duration)*(freq+ValIndex)/sr)).astype(np.float32)
+	stream = p.open(format=pyaudio.paFloat32,
+                channels=1,
+                rate=fs,
+                output=True)
+	stream.write(volume*samples) # Play
 	pg.draw.rect(screen, RED, ((Index*(WIDTH/N_Elements)),HEIGHT-(ValIndex*(HEIGHT/Max_value)),((WIDTH/N_Elements)-2),1000))
 	pg.display.update()
 	
