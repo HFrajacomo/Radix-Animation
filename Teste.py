@@ -69,12 +69,7 @@ def DrawWhiteBars(Lista):
 	
 def DrawRedBar(Index, ValIndex):
 	BlitTitle()
-	samples = (np.sin(2*np.pi*np.arange(sr*duration)*(freq+ValIndex)/sr)).astype(np.float32)
-	stream = p.open(format=pyaudio.paFloat32,
-                channels=1,
-                rate=fs,
-                output=True)
-	stream.write(volume*samples) # Play
+	GenerateSound(ValIndex)
 	pg.draw.rect(screen, RED, ((Index*(WIDTH/N_Elements)),HEIGHT-(ValIndex*(HEIGHT/Max_value)),((WIDTH/N_Elements)-2),1000))
 	pg.display.update()
 	
@@ -89,6 +84,15 @@ def DrawGreenBars(Lista):
 	
 def BlitTitle():
 	screen.blit(Surf,(10, 10, 250, 76))
+	
+def GenerateSound(Index):
+	samples = (np.sin(2*np.pi*np.arange(sr*duration)*(freq+Index)/sr)).astype(np.float32)
+	stream = p.open(format=pyaudio.paFloat32,
+                channels=1,
+                rate=fs,
+                output=True)
+	stream.write(volume*samples) # Play
+	
 	
 #				  #
 #		Main	  #
