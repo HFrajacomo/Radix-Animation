@@ -14,7 +14,7 @@ WHITE = (255,255,255)
 RED = (255,0,0)
 GREEN = (0,255,0)
 
-N_Elements = 320
+N_Elements = 350
 Max_value = 400
 
 def radixsort( aList ):
@@ -42,23 +42,23 @@ def radixsort( aList ):
 		aList[a] = i
 		a += 1
 		screen.fill(BLACK)
-		DrawBars(aList)
+		DrawWhiteBars(aList)
 		DrawRedBar(a, aList[a-1])
 		pg.display.update()
-		time.sleep(0.005)
+	screen.fill(BLACK)
+	DrawWhiteBars(aList)
  
 	# move to next digit
 	placement *= RADIX
 
-
 	
-def DrawBars(Lista):
+def DrawWhiteBars(Lista):
 	i = 0
 	for i in range (0, len(Lista)):
 		BlitTitle()
 		pg.draw.rect(screen, WHITE, ((i*(WIDTH/N_Elements)),HEIGHT-(Lista[i]*(HEIGHT/Max_value)),((WIDTH/N_Elements)-2),1000))
 		i = i + 1
-		
+	
 def DrawRedBar(Index, ValIndex):
 	BlitTitle()
 	pg.draw.rect(screen, RED, ((Index*(WIDTH/N_Elements)),HEIGHT-(ValIndex*(HEIGHT/Max_value)),((WIDTH/N_Elements)-2),1000))
@@ -79,6 +79,19 @@ def BlitTitle():
 #				  #
 #		Main	  #
 #				  #
+
+
+# Aumenta o Display horizontalmente
+if(N_Elements > 320):  
+	WIDTH = N_Elements*2
+	
+# Sincroniza as barras horizontalmente
+elif(WIDTH%N_Elements != 0):
+	HSync = (WIDTH%N_Elements)
+	print(HSync)
+	WIDTH = (WIDTH - HSync)*2
+
+
 screen = pg.display.set_mode((WIDTH, HEIGHT))
 	
 Title = pg.font.Font("Arial.ttf", 24)
@@ -92,7 +105,7 @@ rd.seed(rd.randint(0,10000000000))
 for i in range(0,N_Elements):
 	Lista.append(rd.randint(0, Max_value))
 
-	
+DrawWhiteBars(Lista)
 
 radixsort(Lista)
 DrawGreenBars(Lista)
