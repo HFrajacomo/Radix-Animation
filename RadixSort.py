@@ -26,7 +26,7 @@ N_Elements = 350
 Max_value = 400
 
 def radixsort( aList ):
-  RADIX = 3
+  RADIX = 10
   maxLength = False
   tmp , placement = -1, 1
  
@@ -53,8 +53,6 @@ def radixsort( aList ):
 		DrawWhiteBars(aList)
 		DrawRedBar(a, aList[a-1])
 		pg.display.update()
-	screen.fill(BLACK)
-	DrawWhiteBars(aList)
  
 	# move to next digit
 	placement *= RADIX
